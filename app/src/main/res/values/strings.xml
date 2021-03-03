@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">Homework</string>
+    <string name="app_name">Homework1</string>
+    <string name="text">text</string>
+    <string name="text_person_name">textPersonName</string>
+    <string name="name">Name</string>
+    <string name="button">Button</string>
+    <string name="switchLabel">Switch</string>
+    <string name="checkbox">CheckBox</string>
+    <string name="toggle_button">ToggleButton</string>
+    <string name="phone">phone</string>
+    <string name="number">number</string>
+    <string name="text_password">textPassword</string>
+    <string name="text_email_address">textEmailAddress</string>
+    <string name="hello_world">Hello, World!</string>
+    <string name="ten_m_s">M M M M M M M M M M?</string>
 </resources>
