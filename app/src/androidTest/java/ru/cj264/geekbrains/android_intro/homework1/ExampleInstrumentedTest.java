@@ -1,4 +1,4 @@
-package ru.cj264.geekbrains.android_intro.homework;
+package ru.cj264.geekbrains.android_intro.homework1;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("ru.cj264.geekbrains.android_intro.homework", appContext.getPackageName());
+        assertEquals("ru.cj264.geekbrains.android_intro.homework1", appContext.getPackageName());
     }
 }
