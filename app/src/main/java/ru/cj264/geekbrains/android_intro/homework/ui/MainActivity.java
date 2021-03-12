@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,13 +37,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        String button = v.getResources().getResourceName(v.getId());
-        Log.d("CJ264", button);
-
-        Matcher m = Pattern.compile("(?:button_)\\w+").matcher(button);
-        while (m.find()) {
-            Log.d("CJ264", m.group(0));
+        if (v instanceof Button) {
+            String buttonSym = ((Button) v).getText().toString();
+            calcPresenter.buttonPressed(buttonSym);
         }
+    }
 
+    public void displayResult(String expression) {
+        ((TextView) findViewById(R.id.textView)).setText(expression);
     }
 }

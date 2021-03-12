@@ -8,13 +8,15 @@ public class CalcPresenter {
     MainActivity mainActivity;
     CalcInterface calc = new Calc();
 
-    String digits;
+    String expression = "";
 
     public CalcPresenter(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 
-    public void numberPressed(String digit) {
-        digits += digit;
+    public void buttonPressed(String symbol) {
+        expression += symbol;
+
+        mainActivity.displayResult(expression);
     }
 }
