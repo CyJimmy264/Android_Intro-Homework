@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".ui.MainActivity"
     android:background="@drawable/light_abstract_white_vintage_texture_floor_1200849_pxhere_com">
 
     <!-- GridLayout удобнее для размещения кнопок калькулятора по сетке. -->
