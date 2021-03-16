@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import ru.cj264.geekbrains.android_intro.homework.R;
 import ru.cj264.geekbrains.android_intro.homework.presenter.CalcPresenter;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ICalcView {
 
-    private CalcPresenter calcPresenter = new CalcPresenter(this);
+    private final CalcPresenter calcPresenter = new CalcPresenter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
