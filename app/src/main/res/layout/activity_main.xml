@@ -19,97 +19,97 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_1"
             style="@style/CalcButton"
             android:text="@string/_1"
             android:tag="1"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_2"
             style="@style/CalcButton"
             android:text="@string/_2"
             android:tag="2"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_3"
             style="@style/CalcButton"
             android:text="@string/_3"
             android:tag="3"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_plus"
             style="@style/CalcButton"
             android:text="@string/_plus"
             android:tag="+"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_4"
             style="@style/CalcButton"
             android:text="@string/_4"
             android:tag="4"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_5"
             style="@style/CalcButton"
             android:text="@string/_5"
             android:tag="5"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_6"
             style="@style/CalcButton"
             android:text="@string/_6"
             android:tag="6"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_minus"
             style="@style/CalcButton"
             android:text="@string/_minus"
             android:tag="-"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_7"
             style="@style/CalcButton"
             android:text="@string/_7"
             android:tag="7"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_8"
             style="@style/CalcButton"
             android:text="@string/_8"
             android:tag="8"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_9"
             style="@style/CalcButton"
             android:text="@string/_9"
             android:tag="9"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_multiply"
             style="@style/CalcButton"
             android:text="@string/_multiply"
             android:tag="*"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_point"
             style="@style/CalcButton"
             android:text="@string/_point"
             android:tag="."/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_0"
             style="@style/CalcButton"
             android:text="@string/_0"
             android:tag="0"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_equals"
             style="@style/CalcButton"
             android:text="@string/_equals"
             android:tag="="/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_divide"
             style="@style/CalcButton"
             android:text="@string/_divide"
