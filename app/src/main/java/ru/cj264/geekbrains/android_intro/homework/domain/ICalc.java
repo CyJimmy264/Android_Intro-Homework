@@ -2,6 +2,6 @@ package ru.cj264.geekbrains.android_intro.homework.domain;
 
 import ru.cj264.geekbrains.android_intro.homework.domain.operation.Operation;
 
-public interface CalcInterface {
+public interface ICalc {
     double binaryOperation(double arg1, double arg2, Operation operation);
 }

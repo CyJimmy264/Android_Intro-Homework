@@ -1,12 +1,12 @@
 package ru.cj264.geekbrains.android_intro.homework.presenter;
 
 import ru.cj264.geekbrains.android_intro.homework.domain.Calc;
-import ru.cj264.geekbrains.android_intro.homework.domain.CalcInterface;
+import ru.cj264.geekbrains.android_intro.homework.domain.ICalc;
 import ru.cj264.geekbrains.android_intro.homework.ui.MainActivity;
 
 public class CalcPresenter {
-    MainActivity mainActivity;
-    CalcInterface calc = new Calc();
+    private final MainActivity mainActivity;
+    ICalc calc = new Calc();
 
     String expression = "";
 
@@ -15,8 +15,11 @@ public class CalcPresenter {
     }
 
     public void buttonPressed(String symbol) {
-        expression += symbol;
+        if (symbol.equals("=")) {
+        } else {
+            expression += symbol;
 
-        mainActivity.displayResult(expression);
+            mainActivity.displayResult(expression);
+        }
     }
 }

@@ -1,22 +1,18 @@
 package ru.cj264.geekbrains.android_intro.homework.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import androidx.appcompat.app.AppCompatActivity;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
 import ru.cj264.geekbrains.android_intro.homework.presenter.CalcPresenter;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    CalcPresenter calcPresenter = new CalcPresenter(this);
+    private CalcPresenter calcPresenter = new CalcPresenter(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +29,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button_7).setOnClickListener(this);
         findViewById(R.id.button_8).setOnClickListener(this);
         findViewById(R.id.button_9).setOnClickListener(this);
+
+        findViewById(R.id.button_plus).setOnClickListener(this);
+        findViewById(R.id.button_minus).setOnClickListener(this);
+        findViewById(R.id.button_multiply).setOnClickListener(this);
+        findViewById(R.id.button_divide).setOnClickListener(this);
+        findViewById(R.id.button_point).setOnClickListener(this);
+        findViewById(R.id.button_equals).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if (v instanceof Button) {
-            String buttonSym = ((Button) v).getText().toString();
+            String buttonSym = ((Button) v).getTag().toString();
             calcPresenter.buttonPressed(buttonSym);
         }
     }
