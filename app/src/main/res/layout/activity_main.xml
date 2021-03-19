@@ -14,7 +14,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Calc"/>
+            app:title="Calc"
+            app:menu="@menu/main"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -24,7 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.MainActivity"
-        android:background="@drawable/light_abstract_white_vintage_texture_floor_1200849_pxhere_com"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <!-- GridLayout удобнее для размещения кнопок калькулятора по сетке. -->

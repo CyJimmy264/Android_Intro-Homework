@@ -1,5 +1,7 @@
 package ru.cj264.geekbrains.android_intro.homework.ui;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -34,5 +36,12 @@ public class ThemeActivity extends BaseActivity {
             setAppTheme(codeStyle);
             recreate();
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 }
