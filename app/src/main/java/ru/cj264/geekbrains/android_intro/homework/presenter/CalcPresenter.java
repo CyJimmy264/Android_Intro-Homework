@@ -16,12 +16,12 @@ public class CalcPresenter {
         this.view = view;
     }
 
-    public static String fmt(double d)
-    {
-        if(d == (long) d)
+    public static String fmt(double d) {
+        if(d == (long) d) {
             return String.format(Locale.US, "%d", (long) d);
-        else
+        } else {
             return String.format(Locale.US, "%s", d);
+        }
     }
 
     public void buttonPressed(String symbol) {

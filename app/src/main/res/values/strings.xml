@@ -16,4 +16,9 @@
     <string name="_divide">÷</string>
     <string name="_point">.</string>
     <string name="_equals">=</string>
+
+    <string name="material_pink">Material pink</string>
+    <string name="material_light">Material light</string>
+    <string name="material_dark">Material dark</string>
+    <string name="theme">Theme</string>
 </resources>
