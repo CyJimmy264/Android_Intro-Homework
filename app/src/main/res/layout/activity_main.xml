@@ -1,128 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- ConstraintLayout для расположение кнопок и прочих элементов относительно друг друга
-     и экрана. -->
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity"
-    android:background="@drawable/light_abstract_white_vintage_texture_floor_1200849_pxhere_com">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.MainActivity">
 
-    <!-- GridLayout удобнее для размещения кнопок калькулятора по сетке. -->
-    <GridLayout
-        android:id="@+id/gridLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:columnCount="4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_1"
-            style="@style/CalcButton"
-            android:text="@string/_1"
-            android:tag="1"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="Calc"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_2"
-            style="@style/CalcButton"
-            android:text="@string/_2"
-            android:tag="2"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_3"
-            style="@style/CalcButton"
-            android:text="@string/_3"
-            android:tag="3"/>
+    <!-- ConstraintLayout для расположение кнопок и прочих элементов относительно друг друга
+     и экрана. -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.MainActivity"
+        android:background="@drawable/light_abstract_white_vintage_texture_floor_1200849_pxhere_com"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_plus"
-            style="@style/CalcButton"
-            android:text="@string/_plus"
-            android:tag="+"/>
+        <!-- GridLayout удобнее для размещения кнопок калькулятора по сетке. -->
+        <GridLayout
+            android:id="@+id/gridLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_4"
-            style="@style/CalcButton"
-            android:text="@string/_4"
-            android:tag="4"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_1"
+                style="@style/CalcButton"
+                android:text="@string/_1"
+                android:tag="1"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_5"
-            style="@style/CalcButton"
-            android:text="@string/_5"
-            android:tag="5"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_2"
+                style="@style/CalcButton"
+                android:text="@string/_2"
+                android:tag="2"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_6"
-            style="@style/CalcButton"
-            android:text="@string/_6"
-            android:tag="6"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_3"
+                style="@style/CalcButton"
+                android:text="@string/_3"
+                android:tag="3"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_minus"
-            style="@style/CalcButton"
-            android:text="@string/_minus"
-            android:tag="-"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_plus"
+                style="@style/CalcButton"
+                android:text="@string/_plus"
+                android:tag="+"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_7"
-            style="@style/CalcButton"
-            android:text="@string/_7"
-            android:tag="7"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_4"
+                style="@style/CalcButton"
+                android:text="@string/_4"
+                android:tag="4"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_8"
-            style="@style/CalcButton"
-            android:text="@string/_8"
-            android:tag="8"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_5"
+                style="@style/CalcButton"
+                android:text="@string/_5"
+                android:tag="5"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_9"
-            style="@style/CalcButton"
-            android:text="@string/_9"
-            android:tag="9"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_6"
+                style="@style/CalcButton"
+                android:text="@string/_6"
+                android:tag="6"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_multiply"
-            style="@style/CalcButton"
-            android:text="@string/_multiply"
-            android:tag="*"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_minus"
+                style="@style/CalcButton"
+                android:text="@string/_minus"
+                android:tag="-"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_point"
-            style="@style/CalcButton"
-            android:text="@string/_point"
-            android:tag="."/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_7"
+                style="@style/CalcButton"
+                android:text="@string/_7"
+                android:tag="7"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_0"
-            style="@style/CalcButton"
-            android:text="@string/_0"
-            android:tag="0"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_8"
+                style="@style/CalcButton"
+                android:text="@string/_8"
+                android:tag="8"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_equals"
-            style="@style/CalcButton"
-            android:text="@string/_equals"
-            android:tag="="/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_9"
+                style="@style/CalcButton"
+                android:text="@string/_9"
+                android:tag="9"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_divide"
-            style="@style/CalcButton"
-            android:text="@string/_divide"
-            android:tag="/"/>
-    </GridLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_multiply"
+                style="@style/CalcButton"
+                android:text="@string/_multiply"
+                android:tag="*"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_point"
+                style="@style/CalcButton"
+                android:text="@string/_point"
+                android:tag="."/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_0"
+                style="@style/CalcButton"
+                android:text="@string/_0"
+                android:tag="0"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_equals"
+                style="@style/CalcButton"
+                android:text="@string/_equals"
+                android:tag="="/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_divide"
+                style="@style/CalcButton"
+                android:text="@string/_divide"
+                android:tag="/"/>
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
