@@ -1,8 +1,5 @@
 package ru.cj264.geekbrains.android_intro.homework.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -24,12 +21,12 @@ public class ThemeActivity extends BaseActivity {
 
     private void initThemeChooser() {
         initRadioButton(findViewById(R.id.radioButtonMaterialDark), AppThemeDarkCodeStyle);
-        initRadioButton(findViewById(R.id.radioButtonMaterialLight), AppThemeLightCodeStyle);
+        initRadioButton(findViewById(R.id.radioButtonMaterialLight), AppThemePinkCodeStyle);
         initRadioButton(findViewById(R.id.radioButtonMaterialLightDarkAction),
-                AppThemeCodeStyle);
+                AppThemeLightCodeStyle);
 
         RadioGroup rg = findViewById(R.id.radioButtons);
-        ((MaterialRadioButton) rg.getChildAt(getCodeStyle(AppThemeCodeStyle))).setChecked(true);
+        ((MaterialRadioButton) rg.getChildAt(getCodeStyle(AppThemeLightCodeStyle))).setChecked(true);
     }
 
     private void initRadioButton(View button, final int codeStyle) {

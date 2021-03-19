@@ -19,13 +19,13 @@
             android:id="@+id/radioButtonMaterialLight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/material_light" />
+            android:text="@string/material_pink" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radioButtonMaterialLightDarkAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/material_light_action_bar_dark" />
+            android:text="@string/material_light" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radioButtonMaterialDark"
