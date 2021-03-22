@@ -1,7 +1,6 @@
 package ru.cj264.geekbrains.android_intro.homework.domain;
 
-import org.threeten.bp.LocalDateTime;
-
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

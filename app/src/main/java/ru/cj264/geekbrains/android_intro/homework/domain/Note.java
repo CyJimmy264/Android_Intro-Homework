@@ -1,7 +1,7 @@
 package ru.cj264.geekbrains.android_intro.homework.domain;
 
 
-import org.threeten.bp.LocalDateTime;
+import java.time.LocalDateTime;
 
 public class Note {
     private String id;
