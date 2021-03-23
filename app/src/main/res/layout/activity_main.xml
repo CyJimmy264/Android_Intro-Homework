@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/notes"
-        android:name="ru.cj264.geekbrains.android_intro.homework.ui.NotesFragment"
+        android:name="ru.cj264.geekbrains.android_intro.homework.ui.NotesListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

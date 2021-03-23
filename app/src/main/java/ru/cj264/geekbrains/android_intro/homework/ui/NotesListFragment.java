@@ -27,7 +27,7 @@ import ru.cj264.geekbrains.android_intro.homework.domain.MockNotesRepository;
 import ru.cj264.geekbrains.android_intro.homework.domain.Note;
 import ru.cj264.geekbrains.android_intro.homework.domain.NotesRepository;
 
-public class NotesFragment extends Fragment {
+public class NotesListFragment extends Fragment {
 
     public static final String STATE_CURRENT_NOTE = "CurrentNote";
 
