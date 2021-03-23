@@ -9,11 +9,25 @@
     <fragment
         android:id="@+id/notes_list"
         android:name="ru.cj264.geekbrains.android_intro.homework.ui.NotesListFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/note"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/note"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/notes_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="?android:attr/detailsElementBackground"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

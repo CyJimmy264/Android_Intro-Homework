@@ -1,6 +1,6 @@
 package ru.cj264.geekbrains.android_intro.homework.ui;
 
-import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -15,10 +15,10 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -30,9 +30,9 @@ import ru.cj264.geekbrains.android_intro.homework.domain.NotesRepository;
 public class NotesListFragment extends Fragment {
 
     public static final String STATE_CURRENT_NOTE = "CurrentNote";
+    private String currentNoteId;
 
     private final NotesRepository repository = MockNotesRepository.INSTANCE;
-    private String currentNoteId;
 
     private boolean isLandscape;
 
@@ -41,7 +41,7 @@ public class NotesListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notes, container, false);
+        return inflater.inflate(R.layout.fragment_notes_list, container, false);
     }
 
     @Override
@@ -123,10 +123,19 @@ public class NotesListFragment extends Fragment {
     }
 
     private void showPortNote(Note currentNote) {
-        Toast.makeText(getContext(), "showPortNote " + currentNote.getDescription(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), NoteActivity.class);
+        intent.putExtra(NoteFragment.ARG_NOTE_ID, currentNoteId);
+        startActivity(intent);
     }
 
     private void showLandNote(Note currentNote) {
-        Toast.makeText(getContext(), "showLandNote " + currentNote.getDescription(), Toast.LENGTH_SHORT).show();
+        NoteFragment detail = NoteFragment.newInstance(currentNoteId);
+
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.note, detail);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.commit();
     }
 }
