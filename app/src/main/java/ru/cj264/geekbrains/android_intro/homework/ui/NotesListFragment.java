@@ -10,17 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Optional;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
 import ru.cj264.geekbrains.android_intro.homework.domain.MockNotesRepository;
@@ -65,7 +63,7 @@ public class NotesListFragment extends Fragment {
         }
 
         if (isLandscape) {
-            showNote(currentNoteId);
+            showNote();
         }
     }
 
@@ -98,38 +96,35 @@ public class NotesListFragment extends Fragment {
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
             int dp10 = dpToPx(10);
-            params.setMargins(dp10,dp10,dp10,dp10);
+            int dp5 = dpToPx(5);
+            params.setMargins(dp5,dp10,dp5,dp10);
             tv.setLayoutParams(params);
             layoutView.addView(tv);
             final int fi = i;
             tv.setOnClickListener(v -> {
                 currentNoteId = notes.get(fi).getId();
-                showNote(currentNoteId);
+                showNote();
             });
         }
 
     }
 
-    private void showNote(String currentNoteId) {
-        Optional<Note> optionalNote = repository.getNotes().stream()
-                .filter(note -> note.getId().equals(currentNoteId)).findFirst();
-        if (optionalNote.isPresent()) {
-            if (isLandscape) {
-                showLandNote(optionalNote.get());
-            } else {
-                showPortNote(optionalNote.get());
-            }
+    private void showNote() {
+        if (isLandscape) {
+            showLandNote();
+        } else {
+            showPortNote();
         }
     }
 
-    private void showPortNote(Note currentNote) {
+    private void showPortNote() {
         Intent intent = new Intent();
         intent.setClass(getActivity(), NoteActivity.class);
         intent.putExtra(NoteFragment.ARG_NOTE_ID, currentNoteId);
         startActivity(intent);
     }
 
-    private void showLandNote(Note currentNote) {
+    private void showLandNote() {
         NoteFragment detail = NoteFragment.newInstance(currentNoteId);
 
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();

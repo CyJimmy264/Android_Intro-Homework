@@ -4,10 +4,10 @@ package ru.cj264.geekbrains.android_intro.homework.domain;
 import java.time.LocalDateTime;
 
 public class Note {
-    private String id;
-    private String title;
-    private String description;
-    private LocalDateTime creationDateTime;
+    private final String id;
+    private final String title;
+    private final String description;
+    private final LocalDateTime creationDateTime;
 
     public Note(String id, String title, String description, LocalDateTime creationDateTime) {
         this.id = id;

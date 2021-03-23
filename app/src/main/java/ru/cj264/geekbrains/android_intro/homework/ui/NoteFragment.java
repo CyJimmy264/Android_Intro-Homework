@@ -1,18 +1,14 @@
 package ru.cj264.geekbrains.android_intro.homework.ui;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.Optional;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
 import ru.cj264.geekbrains.android_intro.homework.domain.MockNotesRepository;
