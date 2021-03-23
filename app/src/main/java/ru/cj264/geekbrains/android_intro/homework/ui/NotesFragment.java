@@ -10,22 +10,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
+import ru.cj264.geekbrains.android_intro.homework.domain.MockNotesRepository;
 import ru.cj264.geekbrains.android_intro.homework.domain.Note;
+import ru.cj264.geekbrains.android_intro.homework.domain.NotesRepository;
 
 public class NotesFragment extends Fragment {
 
     public static final String STATE_CURRENT_NOTE = "CurrentNote";
-    private Note currentNote;
+
+    private final NotesRepository repository = MockNotesRepository.INSTANCE;
+    private String currentNoteId;
+
     private boolean isLandscape;
 
     @Nullable
@@ -51,15 +59,23 @@ public class NotesFragment extends Fragment {
                 == Configuration.ORIENTATION_LANDSCAPE;
 
         if (savedInstanceState != null) {
-            currentNote = savedInstanceState.getParcelable(STATE_CURRENT_NOTE);
+            currentNoteId = savedInstanceState.getString(STATE_CURRENT_NOTE);
         } else {
-            currentNote = new Note("1", "First",  "First note content",  LocalDateTime.of(2021, 3, 23, 3, 49));
+            currentNoteId = repository.getNotes().get(0).getId();
         }
 
         if (isLandscape) {
-            showLandNote(currentNote);
+            showNote(currentNoteId);
         }
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(STATE_CURRENT_NOTE, currentNoteId);
+        super.onSaveInstanceState(outState);
+    }
+
+
 
     private int dpToPx(int dp) {
         Resources r = Objects.requireNonNull(getContext()).getResources();
@@ -71,9 +87,11 @@ public class NotesFragment extends Fragment {
     private void initList(View view) {
         LinearLayout layoutView = view.findViewById(R.id.linear_layout);
 
-        for (int i = 0; i < 120; i++) {
+        ArrayList<Note> notes = repository.getNotes();
+
+        for (int i = 0; i < notes.size(); i++) {
             TextView tv = new TextView(getContext());
-            tv.setText(String.format(Locale.US, "Note %04d", i));
+            tv.setText(notes.get(i).getTitle());
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -84,30 +102,31 @@ public class NotesFragment extends Fragment {
             tv.setLayoutParams(params);
             layoutView.addView(tv);
             final int fi = i;
-            tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    currentNote = new Note("1", "First",  "First note content",  LocalDateTime.of(2021, 3, 23, 3, 49));
-                    showNote(currentNote);
-                }
+            tv.setOnClickListener(v -> {
+                currentNoteId = notes.get(fi).getId();
+                showNote(currentNoteId);
             });
         }
 
     }
 
-    private void showNote(Note currentNote) {
-        if (isLandscape) {
-            showLandNote(currentNote);
-        } else {
-            showPortNote(currentNote);
+    private void showNote(String currentNoteId) {
+        Optional<Note> optionalNote = repository.getNotes().stream()
+                .filter(note -> note.getId().equals(currentNoteId)).findFirst();
+        if (optionalNote.isPresent()) {
+            if (isLandscape) {
+                showLandNote(optionalNote.get());
+            } else {
+                showPortNote(optionalNote.get());
+            }
         }
     }
 
     private void showPortNote(Note currentNote) {
-
+        Toast.makeText(getContext(), "showPortNote " + currentNote.getDescription(), Toast.LENGTH_SHORT).show();
     }
 
     private void showLandNote(Note currentNote) {
-
+        Toast.makeText(getContext(), "showLandNote " + currentNote.getDescription(), Toast.LENGTH_SHORT).show();
     }
 }

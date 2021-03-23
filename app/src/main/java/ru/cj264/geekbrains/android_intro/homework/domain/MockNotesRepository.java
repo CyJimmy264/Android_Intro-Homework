@@ -9,7 +9,7 @@ public class MockNotesRepository implements NotesRepository {
     public static final NotesRepository INSTANCE = new MockNotesRepository();
 
     @Override
-    public List<Note> getNotes() {
+    public ArrayList<Note> getNotes() {
         ArrayList<Note> data = new ArrayList<>();
 
         data.add(new Note("1", "First",  "First note content",  LocalDateTime.of(2021, 3, 23, 3, 49)));
@@ -18,6 +18,6 @@ public class MockNotesRepository implements NotesRepository {
         data.add(new Note("4", "Fourth", "Fourth note content", LocalDateTime.of(2021, 3, 23, 3, 52)));
         data.add(new Note("5", "Fifth",  "Fifth note content",  LocalDateTime.of(2021, 3, 23, 3, 53)));
 
-        return null;
+        return data;
     }
 }

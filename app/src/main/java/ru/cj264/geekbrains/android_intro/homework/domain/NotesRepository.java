@@ -1,7 +1,7 @@
 package ru.cj264.geekbrains.android_intro.homework.domain;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface NotesRepository {
-    List<Note> getNotes();
+    ArrayList<Note> getNotes();
 }
