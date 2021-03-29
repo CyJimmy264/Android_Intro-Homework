@@ -3,6 +3,7 @@ package ru.cj264.geekbrains.android_intro.homework.ui;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -39,7 +40,8 @@ public class NotesListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notes_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_notes_list, container, false);
+        return view;
     }
 
     @Override
@@ -87,17 +89,20 @@ public class NotesListFragment extends Fragment {
 
         ArrayList<Note> notes = repository.getNotes();
 
+        int dp10 = dpToPx(10);
+        int dp20 = dpToPx(20);
+
         for (int i = 0; i < notes.size(); i++) {
             TextView tv = new TextView(getContext());
             tv.setText(notes.get(i).getTitle());
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+            tv.setBackgroundColor(Color.LTGRAY);
+            tv.setPadding(dp10, dp10, dp10, dp10);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            int dp10 = dpToPx(10);
-            int dp5 = dpToPx(5);
-            params.setMargins(dp5,dp10,dp5,dp10);
+            params.setMargins(dp20,dp10,dp20,dp10);
             tv.setLayoutParams(params);
             layoutView.addView(tv);
             final int fi = i;
@@ -129,7 +134,7 @@ public class NotesListFragment extends Fragment {
 
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.note, detail);
+//        fragmentTransaction.replace(R.id.note, detail);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
     }
