@@ -3,4 +3,7 @@
     <string name="search">Search</string>
     <string name="about">About</string>
     <string name="sort">Sort</string>
+    <string name="share">Share</string>
+    <string name="insert_link">Insert link</string>
+    <string name="add_image">Add image</string>
 </resources>
