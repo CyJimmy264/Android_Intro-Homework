@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
@@ -85,7 +86,7 @@ public class NotesListFragment extends Fragment {
     private void initList(View view) {
         LinearLayout layoutView = view.findViewById(R.id.linear_layout);
 
-        ArrayList<Note> notes = repository.getNotes();
+        List<Note> notes = repository.getNotes();
 
         int dp10 = dpToPx(10);
         int dp20 = dpToPx(20);
