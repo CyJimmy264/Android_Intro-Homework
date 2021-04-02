@@ -1,4 +1,4 @@
-package ru.cj264.geekbrains.android_intro.homework.ui;
+package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -15,15 +15,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Objects;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
-import ru.cj264.geekbrains.android_intro.homework.domain.MockNotesRepository;
 import ru.cj264.geekbrains.android_intro.homework.domain.Note;
-import ru.cj264.geekbrains.android_intro.homework.domain.NotesRepository;
+import ru.cj264.geekbrains.android_intro.homework.ui.NoteFragment;
 
 public class NotesListFragment extends Fragment {
 
@@ -31,9 +34,20 @@ public class NotesListFragment extends Fragment {
     public static final String STATE_CURRENT_NOTE = "CurrentNote";
     private String currentNoteId;
 
-    private final NotesRepository repository = MockNotesRepository.INSTANCE;
+    private NotesListViewModel notesListViewModel;
+    private NotesListAdapter notesListAdapter;
 
     private boolean isLandscape;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        notesListViewModel = ViewModelProviders.of(this).get(NotesListViewModel.class);
+        notesListViewModel.fetchNotes();
+
+        notesListAdapter = new NotesListAdapter();
+    }
 
     @Nullable
     @Override
@@ -47,7 +61,19 @@ public class NotesListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initList(view);
+        RecyclerView notesList = view.findViewById(R.id.notes_list);
+        notesList.setAdapter(notesListAdapter);
+        notesList.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        notesListViewModel.getNotesLiveData()
+                .observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
+                    @Override
+                    public void onChanged(List<Note> notes) {
+                        notesListAdapter.clear();
+                        notesListAdapter.addItems(notes);
+                        notesListAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     @Override
@@ -60,7 +86,8 @@ public class NotesListFragment extends Fragment {
         if (savedInstanceState != null) {
             currentNoteId = savedInstanceState.getString(STATE_CURRENT_NOTE);
         } else {
-            currentNoteId = repository.getNotes().get(0).getId();
+            currentNoteId = Objects.requireNonNull(notesListViewModel.getNotesLiveData().getValue())
+                    .get(0).getId();
         }
 
         if (isLandscape) {
@@ -83,35 +110,10 @@ public class NotesListFragment extends Fragment {
         );
     }
 
-    private void initList(View view) {
-        LinearLayout layoutView = view.findViewById(R.id.linear_layout);
-
-        List<Note> notes = repository.getNotes();
-
-        int dp10 = dpToPx(10);
-        int dp20 = dpToPx(20);
-
-        for (int i = 0; i < notes.size(); i++) {
-            TextView tv = new TextView(getContext());
-            tv.setText(notes.get(i).getTitle());
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-            tv.setBackgroundColor(Color.LTGRAY);
-            tv.setPadding(dp10, dp10, dp10, dp10);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(dp20,dp10,dp20,dp10);
-            tv.setLayoutParams(params);
-            layoutView.addView(tv);
-            final int fi = i;
-            tv.setOnClickListener(v -> {
-                currentNoteId = notes.get(fi).getId();
-                showNote();
-            });
-        }
-
-    }
+//            tv.setOnClickListener(v -> {
+//                currentNoteId = notes.get(fi).getId();
+//                showNote();
+//            });
 
     private void showNote() {
         if (isLandscape) {

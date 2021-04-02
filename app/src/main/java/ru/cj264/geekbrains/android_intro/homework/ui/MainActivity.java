@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
+import ru.cj264.geekbrains.android_intro.homework.ui.notes_list.NotesListFragment;
 
 public class MainActivity extends AppCompatActivity {
 
