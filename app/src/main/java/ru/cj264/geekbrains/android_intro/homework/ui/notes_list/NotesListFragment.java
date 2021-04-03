@@ -1,31 +1,22 @@
 package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import java.util.List;
 import java.util.Objects;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
-import ru.cj264.geekbrains.android_intro.homework.domain.Note;
 import ru.cj264.geekbrains.android_intro.homework.ui.NoteFragment;
 
 public class NotesListFragment extends Fragment {
@@ -47,6 +38,10 @@ public class NotesListFragment extends Fragment {
         notesListViewModel.fetchNotes();
 
         notesListAdapter = new NotesListAdapter();
+        notesListAdapter.setOnNoteClicked(note -> {
+            currentNoteId = note.getId();
+            showNote();
+        });
     }
 
     @Nullable
@@ -66,13 +61,10 @@ public class NotesListFragment extends Fragment {
         notesList.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         notesListViewModel.getNotesLiveData()
-                .observe(getViewLifecycleOwner(), new Observer<List<Note>>() {
-                    @Override
-                    public void onChanged(List<Note> notes) {
-                        notesListAdapter.clear();
-                        notesListAdapter.addItems(notes);
-                        notesListAdapter.notifyDataSetChanged();
-                    }
+                .observe(getViewLifecycleOwner(), notes -> {
+                    notesListAdapter.clear();
+                    notesListAdapter.addItems(notes);
+                    notesListAdapter.notifyDataSetChanged();
                 });
     }
 
@@ -100,20 +92,6 @@ public class NotesListFragment extends Fragment {
         outState.putString(STATE_CURRENT_NOTE, currentNoteId);
         super.onSaveInstanceState(outState);
     }
-
-
-
-    private int dpToPx(int dp) {
-        Resources r = Objects.requireNonNull(getContext()).getResources();
-        return (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()
-        );
-    }
-
-//            tv.setOnClickListener(v -> {
-//                currentNoteId = notes.get(fi).getId();
-//                showNote();
-//            });
 
     private void showNote() {
         if (isLandscape) {

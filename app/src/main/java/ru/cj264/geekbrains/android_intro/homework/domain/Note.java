@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 public class Note {
     private final String id;
     private final LocalDateTime creationDateTime;
-    private String title;
-    private String description;
+    private final String title;
+    private final String description;
     private String imageUrl = "https://img3.akspic.ru/originals/2/8/8/7/4/147882-poni-rozovyj-liniya-kartinka-televideniye-750x1334.jpg";
 
     public Note(String id, String title, String description, LocalDateTime creationDateTime) {

@@ -1,6 +1,5 @@
 package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.bumptech.glide.Glide;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -25,7 +23,9 @@ import ru.cj264.geekbrains.android_intro.homework.domain.Note;
 
 public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.NoteViewHolder> {
 
-    List<Note> items = new ArrayList<>();
+    private final List<Note> items = new ArrayList<>();
+
+    private OnNoteClicked onNoteClicked;
 
     public void addItems(List<Note> items) {
         this.items.addAll(items);
@@ -67,12 +67,19 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
         return items.size();
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+    public OnNoteClicked getOnNoteClicked() {
+        return onNoteClicked;
     }
 
-    public static class NoteViewHolder extends RecyclerView.ViewHolder {
+    public void setOnNoteClicked(OnNoteClicked onNoteClicked) {
+        this.onNoteClicked = onNoteClicked;
+    }
+
+    interface OnNoteClicked {
+        void onNoteClicked(Note note);
+    }
+
+    public class NoteViewHolder extends RecyclerView.ViewHolder {
         private final TextView noteTitle;
         private final TextView noteCreationDate;
         private final ImageView noteImage;
@@ -83,6 +90,12 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
             noteTitle = itemView.findViewById(R.id.note_title);
             noteCreationDate = itemView.findViewById(R.id.note_creation_date);
             noteImage = itemView.findViewById(R.id.note_image);
+
+            itemView.setOnClickListener(v -> {
+                if (getOnNoteClicked() != null) {
+                    getOnNoteClicked().onNoteClicked(items.get(getAdapterPosition()));
+                }
+            });
         }
 
         public TextView getNoteTitle() {
