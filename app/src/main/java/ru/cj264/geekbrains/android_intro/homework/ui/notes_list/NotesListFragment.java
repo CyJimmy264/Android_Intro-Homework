@@ -34,7 +34,8 @@ public class NotesListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        notesListViewModel = ViewModelProviders.of(this).get(NotesListViewModel.class);
+        notesListViewModel = ViewModelProviders.of(this, new NotesListViewModelFactory())
+                .get(NotesListViewModel.class);
         notesListViewModel.fetchNotes();
 
         notesListAdapter = new NotesListAdapter();
@@ -78,8 +79,7 @@ public class NotesListFragment extends Fragment {
         if (savedInstanceState != null) {
             currentNoteId = savedInstanceState.getString(STATE_CURRENT_NOTE);
         } else {
-            currentNoteId = Objects.requireNonNull(notesListViewModel.getNotesLiveData().getValue())
-                    .get(0).getId();
+            currentNoteId = "1"; // Objects.requireNonNull(notesListViewModel.getNotesLiveData().getValue())                    .get(0).getId();
         }
 
         if (isLandscape) {

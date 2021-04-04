@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.LocalDateTime;
+
 import ru.cj264.geekbrains.android_intro.homework.R;
 import ru.cj264.geekbrains.android_intro.homework.domain.MockNotesRepository;
 import ru.cj264.geekbrains.android_intro.homework.domain.Note;
@@ -48,10 +50,13 @@ public class NoteFragment extends Fragment {
 
         if (getArguments() != null) {
             String noteId = getArguments().getString(ARG_NOTE_ID);
-            note = null;
-            repository.getNotes().stream()
-                    .filter(note -> note.getId().equals(noteId)).findFirst()
-                    .ifPresent(value -> note = value);
+
+//            note = null;
+//            repository.getNotes().stream()
+//                    .filter(note -> note.getId().equals(noteId)).findFirst()
+//                    .ifPresent(value -> note = value);
+
+            note = new Note("1", "First",  "First note content",  LocalDateTime.of(2021, 3, 22, 13, 49));
         }
     }
 
