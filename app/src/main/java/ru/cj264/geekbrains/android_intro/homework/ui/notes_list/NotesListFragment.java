@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,11 +63,22 @@ public class NotesListFragment extends Fragment {
         notesList.setAdapter(notesListAdapter);
         notesList.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+        ProgressBar progressBar = view.findViewById(R.id.progress);
+
         notesListViewModel.getNotesLiveData()
                 .observe(getViewLifecycleOwner(), notes -> {
                     notesListAdapter.clear();
                     notesListAdapter.addItems(notes);
                     notesListAdapter.notifyDataSetChanged();
+                });
+
+        notesListViewModel.getProgressLiveData()
+                .observe(getViewLifecycleOwner(), isVisible -> {
+                    if (isVisible) {
+                        progressBar.setVisibility(ProgressBar.VISIBLE);
+                    } else {
+                        progressBar.setVisibility(ProgressBar.GONE);
+                    }
                 });
     }
 
