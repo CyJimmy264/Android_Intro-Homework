@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toStartOf="@id/note"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:context=".ui.NotesListFragment">
+        tools:context=".ui.notes_list.NotesListFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

@@ -3,4 +3,7 @@
 
     <dimen name="nav_header_height">200dp</dimen>
     <dimen name="nav_header_dimen">42sp</dimen>
+
+
+    <dimen name="note_image_preview_size">48dp</dimen>
 </resources>
