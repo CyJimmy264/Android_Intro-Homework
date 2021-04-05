@@ -1,11 +1,16 @@
 package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +34,7 @@ public class NotesListFragment extends Fragment {
     private NotesListAdapter notesListAdapter;
 
     private boolean isLandscape;
+    private int contextMenuItemPosition;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,10 +44,19 @@ public class NotesListFragment extends Fragment {
                 .get(NotesListViewModel.class);
         notesListViewModel.fetchNotes();
 
-        notesListAdapter = new NotesListAdapter();
+        notesListAdapter = new NotesListAdapter(this);
         notesListAdapter.setOnNoteClicked(note -> {
             currentNoteId = note.getId();
             showNote();
+        });
+
+        notesListAdapter.setOnNoteLongClicked((itemView, position, note) -> {
+            contextMenuItemPosition = position;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                itemView.showContextMenu(10, 10);
+            } else {
+                itemView.showContextMenu();
+            }
         });
     }
 
@@ -99,6 +114,12 @@ public class NotesListFragment extends Fragment {
                         progressBar.setVisibility(ProgressBar.GONE);
                     }
                 });
+
+        notesListViewModel.getDeleteAtPositionData()
+                .observe(getViewLifecycleOwner(), position -> {
+                    notesListAdapter.deleteItem(position);
+                    notesListAdapter.notifyItemRemoved(position);
+                });
     }
 
     @Override
@@ -146,5 +167,23 @@ public class NotesListFragment extends Fragment {
                 .replace(R.id.note, NoteFragment.newInstance(currentNoteId))
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater menuInflater = requireActivity().getMenuInflater();
+        menuInflater.inflate(R.menu.context_notes_list, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_delete) {
+            notesListViewModel.deleteAtPosition(contextMenuItemPosition);
+            Toast.makeText(requireContext(), "Deleted " + contextMenuItemPosition, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onContextItemSelected(item);
     }
 }

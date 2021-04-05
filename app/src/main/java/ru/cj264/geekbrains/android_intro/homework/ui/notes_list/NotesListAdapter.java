@@ -1,5 +1,6 @@
 package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +29,14 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
 
     private OnNoteClicked onNoteClicked;
 
+    private OnNoteLongClicked onNoteLongClicked;
+
+    private final Fragment fragment;
+
+    public NotesListAdapter(Fragment fragment) {
+        this.fragment = fragment;
+    }
+
     public void setItems(List<Note> items) {
         this.items.clear();
         this.items.addAll(items);
@@ -35,6 +45,11 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
     public void addItem(Note note) {
         items.add(note);
     }
+
+    public void deleteItem(int position) {
+        items.remove(position);
+    }
+
 
     @NonNull
     @Override
@@ -76,8 +91,21 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
         this.onNoteClicked = onNoteClicked;
     }
 
+    public OnNoteLongClicked getOnNoteLongClicked() {
+        return onNoteLongClicked;
+    }
+
+    public void setOnNoteLongClicked(OnNoteLongClicked onNoteLongClicked) {
+        this.onNoteLongClicked = onNoteLongClicked;
+    }
+
+
     interface OnNoteClicked {
         void onNoteClicked(Note note);
+    }
+
+    interface OnNoteLongClicked {
+        void onNoteLongClicked(View itemView, int position, Note note);
     }
 
     public class NoteViewHolder extends RecyclerView.ViewHolder {
@@ -88,6 +116,8 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
         public NoteViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            fragment.registerForContextMenu(itemView);
+
             noteTitle = itemView.findViewById(R.id.note_title);
             noteCreationDate = itemView.findViewById(R.id.note_creation_date);
             noteImage = itemView.findViewById(R.id.note_image);
@@ -96,6 +126,15 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
                 if (getOnNoteClicked() != null) {
                     getOnNoteClicked().onNoteClicked(items.get(getAdapterPosition()));
                 }
+            });
+
+            itemView.setOnLongClickListener(v -> {
+                if (onNoteLongClicked != null) {
+                    onNoteLongClicked.onNoteLongClicked(itemView, getAdapterPosition(),
+                            items.get(getAdapterPosition()));
+                }
+
+                return true;
             });
         }
 
