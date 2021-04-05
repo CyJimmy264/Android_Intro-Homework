@@ -27,12 +27,13 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
 
     private OnNoteClicked onNoteClicked;
 
-    public void addItems(List<Note> items) {
+    public void setItems(List<Note> items) {
+        this.items.clear();
         this.items.addAll(items);
     }
 
-    public void clear() {
-        items.clear();
+    public void addItem(Note note) {
+        items.add(note);
     }
 
     @NonNull

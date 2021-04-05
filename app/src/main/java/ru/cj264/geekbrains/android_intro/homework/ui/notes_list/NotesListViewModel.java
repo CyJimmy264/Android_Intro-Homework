@@ -1,7 +1,5 @@
 package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 
-import android.telecom.Call;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -9,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.cj264.geekbrains.android_intro.homework.domain.Callback;
 import ru.cj264.geekbrains.android_intro.homework.domain.Note;
 import ru.cj264.geekbrains.android_intro.homework.domain.NotesRepository;
 
@@ -17,6 +14,7 @@ public class NotesListViewModel extends ViewModel {
     private final NotesRepository repository;
 
     private final MutableLiveData<List<Note>> notesLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Note> newNoteLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
 
     public NotesListViewModel(NotesRepository notesRepository) {
@@ -34,12 +32,17 @@ public class NotesListViewModel extends ViewModel {
     public LiveData<List<Note>> getNotesLiveData() {
         return notesLiveData;
     }
-
+    public LiveData<Note> getNewNoteLiveData() { return newNoteLiveData; }
     public LiveData<Boolean> getProgressLiveData() {
         return progressLiveData;
     }
 
     public void addNewNote() {
+        progressLiveData.setValue(true);
+        repository.addNewNote(value -> {
+            newNoteLiveData.postValue(value);
+            progressLiveData.setValue(false);
+        });
     }
 
     public void clearNotes() {

@@ -3,7 +3,6 @@ package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -13,12 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.Objects;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
 import ru.cj264.geekbrains.android_intro.homework.ui.NoteFragment;
@@ -63,29 +59,36 @@ public class NotesListFragment extends Fragment {
 
         RecyclerView notesList = view.findViewById(R.id.notes_list);
         notesList.setAdapter(notesListAdapter);
-        notesList.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        notesList.setLayoutManager(linearLayoutManager);
 
         ProgressBar progressBar = view.findViewById(R.id.progress);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.action_add_new) {
-                    notesListViewModel.addNewNote();
-                } else if (item.getItemId() == R.id.action_clear) {
-                    notesListViewModel.clearNotes();
-                }
-                return true;
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_add_new) {
+                notesListViewModel.addNewNote();
+            } else if (item.getItemId() == R.id.action_clear) {
+                notesListViewModel.clearNotes();
             }
+            return true;
         });
 
         notesListViewModel.getNotesLiveData()
                 .observe(getViewLifecycleOwner(), notes -> {
-                    notesListAdapter.clear();
-                    notesListAdapter.addItems(notes);
+                    notesListAdapter.setItems(notes);
                     notesListAdapter.notifyDataSetChanged();
+                });
+
+        notesListViewModel.getNewNoteLiveData()
+                .observe(getViewLifecycleOwner(), note -> {
+                    notesListAdapter.addItem(note);
+                    notesListAdapter.notifyItemInserted(notesListAdapter.getItemCount() - 1);
+                    notesList.scrollToPosition(notesListAdapter.getItemCount() - 1);
                 });
 
         notesListViewModel.getProgressLiveData()

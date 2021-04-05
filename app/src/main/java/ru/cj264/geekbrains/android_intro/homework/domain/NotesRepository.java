@@ -6,4 +6,6 @@ public interface NotesRepository {
     void getNotes(Callback<List<Note>> callback);
 
     void clearNotes(Callback<Void> voidCallback);
+
+    void addNewNote(Callback<Note> callback);
 }

@@ -67,4 +67,18 @@ public class MockNotesRepository implements NotesRepository {
             mainThreadHandler.post(() -> voidCallback.onResult(null));
         });
     }
+
+    @Override
+    public void addNewNote(Callback<Note> callback) {
+        executor.execute(() -> {
+            try {
+                Thread.sleep(800L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            mainThreadHandler.post(() -> callback.onResult(new Note("99", "New Note", "Description", LocalDateTime.now())));
+        });
+
+    }
 }
