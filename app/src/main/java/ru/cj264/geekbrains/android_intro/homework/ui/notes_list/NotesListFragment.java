@@ -3,12 +3,14 @@ package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
@@ -64,6 +66,20 @@ public class NotesListFragment extends Fragment {
         notesList.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         ProgressBar progressBar = view.findViewById(R.id.progress);
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_add_new) {
+                    notesListViewModel.addNewNote();
+                } else if (item.getItemId() == R.id.action_clear) {
+                    notesListViewModel.clearNotes();
+                }
+                return true;
+            }
+        });
 
         notesListViewModel.getNotesLiveData()
                 .observe(getViewLifecycleOwner(), notes -> {

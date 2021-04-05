@@ -23,7 +23,7 @@ public class MockNotesRepository implements NotesRepository {
         executor.execute(() -> {
             // network request simulation
             try {
-                Thread.sleep(2000L);
+                Thread.sleep(800L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -52,6 +52,19 @@ public class MockNotesRepository implements NotesRepository {
             data.add(new Note("20", "Fifth",  "Fifth note content",  LocalDateTime.of(2021, 3, 26, 3, 53)));
 
             mainThreadHandler.post(() -> callback.onResult(data));
+        });
+    }
+
+    @Override
+    public void clearNotes(Callback<Void> voidCallback) {
+        executor.execute(() -> {
+            try {
+                Thread.sleep(800L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            mainThreadHandler.post(() -> voidCallback.onResult(null));
         });
     }
 }

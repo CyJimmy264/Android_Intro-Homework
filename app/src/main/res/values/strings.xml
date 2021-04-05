@@ -6,4 +6,6 @@
     <string name="share">Share</string>
     <string name="insert_link">Insert link</string>
     <string name="add_image">Add image</string>
+    <string name="add_new">Add new</string>
+    <string name="clear">Clear</string>
 </resources>

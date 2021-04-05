@@ -1,9 +1,12 @@
 package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 
+import android.telecom.Call;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.cj264.geekbrains.android_intro.homework.domain.Callback;
@@ -34,5 +37,16 @@ public class NotesListViewModel extends ViewModel {
 
     public LiveData<Boolean> getProgressLiveData() {
         return progressLiveData;
+    }
+
+    public void addNewNote() {
+    }
+
+    public void clearNotes() {
+        progressLiveData.setValue(true);
+        repository.clearNotes(voidValue -> {
+            notesLiveData.postValue(new ArrayList<>());
+            progressLiveData.setValue(false);
+        });
     }
 }
