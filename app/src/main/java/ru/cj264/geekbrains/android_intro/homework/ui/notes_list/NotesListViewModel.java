@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.cj264.geekbrains.android_intro.homework.domain.Callback;
 import ru.cj264.geekbrains.android_intro.homework.domain.Note;
 import ru.cj264.geekbrains.android_intro.homework.domain.NotesRepository;
 

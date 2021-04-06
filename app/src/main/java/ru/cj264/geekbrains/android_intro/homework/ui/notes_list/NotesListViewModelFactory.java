@@ -9,6 +9,7 @@ import ru.cj264.geekbrains.android_intro.homework.domain.MockNotesRepository;
 public class NotesListViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         return (T) new NotesListViewModel(MockNotesRepository.INSTANCE);
     }

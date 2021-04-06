@@ -3,6 +3,7 @@ package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -10,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +20,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.datepicker.MaterialDatePicker;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
 import ru.cj264.geekbrains.android_intro.homework.ui.NoteFragment;
@@ -181,7 +183,12 @@ public class NotesListFragment extends Fragment {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_delete) {
             notesListViewModel.deleteAtPosition(contextMenuItemPosition);
-            Toast.makeText(requireContext(), "Deleted " + contextMenuItemPosition, Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (item.getItemId() == R.id.action_date_picker) {
+            MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker().build();
+            datePicker.addOnPositiveButtonClickListener(selection -> Log.d(TAG, "selection: " + selection.toString()));
+            datePicker.show(getChildFragmentManager(), "MaterialDatePicker");
             return true;
         }
         return super.onContextItemSelected(item);

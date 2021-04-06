@@ -1,6 +1,5 @@
 package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
 
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,8 +128,8 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
             });
 
             itemView.setOnLongClickListener(v -> {
-                if (onNoteLongClicked != null) {
-                    onNoteLongClicked.onNoteLongClicked(itemView, getAdapterPosition(),
+                if (getOnNoteLongClicked() != null) {
+                    getOnNoteLongClicked().onNoteLongClicked(itemView, getAdapterPosition(),
                             items.get(getAdapterPosition()));
                 }
 
