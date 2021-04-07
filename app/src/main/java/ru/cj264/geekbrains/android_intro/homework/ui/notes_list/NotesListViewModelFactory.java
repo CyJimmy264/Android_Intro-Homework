@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import ru.cj264.geekbrains.android_intro.homework.domain.FirestoreNotesRepository;
 import ru.cj264.geekbrains.android_intro.homework.domain.MockNotesRepository;
 
 public class NotesListViewModelFactory implements ViewModelProvider.Factory {
@@ -11,6 +12,6 @@ public class NotesListViewModelFactory implements ViewModelProvider.Factory {
     @Override
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new NotesListViewModel(MockNotesRepository.INSTANCE);
+        return (T) new NotesListViewModel(FirestoreNotesRepository.INSTANCE);
     }
 }
