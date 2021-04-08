@@ -1,19 +1,16 @@
 package ru.cj264.geekbrains.android_intro.homework.domain;
 
-
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,11 +67,13 @@ public class FirestoreNotesRepository implements NotesRepository {
 
     @Override
     public void clearNotes(Callback<Void> voidCallback) {
-
+        voidCallback.onResult(null);
     }
 
     @Override
     public void addNewNote(Callback<Note> callback) {
-
+        // TODO: Firebase request
+        String id = RandomStringUtils.randomAlphanumeric(10);
+        callback.onResult(new Note(id, "Title", "Description", LocalDateTime.now()));
     }
 }

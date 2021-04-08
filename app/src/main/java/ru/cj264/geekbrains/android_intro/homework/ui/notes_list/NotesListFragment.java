@@ -25,6 +25,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
 import ru.cj264.geekbrains.android_intro.homework.ui.NoteFragment;
+import ru.cj264.geekbrains.android_intro.homework.ui.notes_list.adapter.NotesListAdapter;
 
 public class NotesListFragment extends Fragment {
 
@@ -96,17 +97,7 @@ public class NotesListFragment extends Fragment {
         });
 
         notesListViewModel.getNotesLiveData()
-                .observe(getViewLifecycleOwner(), notes -> {
-                    notesListAdapter.setItems(notes);
-                    notesListAdapter.notifyDataSetChanged();
-                });
-
-        notesListViewModel.getNewNoteLiveData()
-                .observe(getViewLifecycleOwner(), note -> {
-                    notesListAdapter.addItem(note);
-                    notesListAdapter.notifyItemInserted(notesListAdapter.getItemCount() - 1);
-                    notesList.scrollToPosition(notesListAdapter.getItemCount() - 1);
-                });
+                .observe(getViewLifecycleOwner(), notes -> notesListAdapter.setItems(notes));
 
         notesListViewModel.getProgressLiveData()
                 .observe(getViewLifecycleOwner(), isVisible -> {
@@ -115,12 +106,6 @@ public class NotesListFragment extends Fragment {
                     } else {
                         progressBar.setVisibility(ProgressBar.GONE);
                     }
-                });
-
-        notesListViewModel.getDeleteAtPositionData()
-                .observe(getViewLifecycleOwner(), position -> {
-                    notesListAdapter.deleteItem(position);
-                    notesListAdapter.notifyItemRemoved(position);
                 });
     }
 
