@@ -1,4 +1,4 @@
-package ru.cj264.geekbrains.android_intro.homework.ui;
+package ru.cj264.geekbrains.android_intro.homework.ui.note;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 
 import androidx.fragment.app.Fragment;
 
@@ -15,18 +14,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.time.LocalDateTime;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
-import ru.cj264.geekbrains.android_intro.homework.domain.MockNotesRepository;
 import ru.cj264.geekbrains.android_intro.homework.domain.Note;
-import ru.cj264.geekbrains.android_intro.homework.domain.NotesRepository;
 
 public class NoteFragment extends Fragment {
 
     public static final String TAG = "NoteFragment";
     public static final String ARG_NOTE_ID = "noteId";
     private Note note;
-
-    private final NotesRepository repository = MockNotesRepository.INSTANCE;
-
 
     public static NoteFragment newInstance(String noteId) {
         NoteFragment fragment = new NoteFragment();
@@ -49,7 +43,7 @@ public class NoteFragment extends Fragment {
         }
 
         if (getArguments() != null) {
-            String noteId = getArguments().getString(ARG_NOTE_ID);
+//            String noteId = getArguments().getString(ARG_NOTE_ID);
 
 //            note = null;
 //            repository.getNotes().stream()
@@ -67,11 +61,6 @@ public class NoteFragment extends Fragment {
 
         ((TextInputEditText) view.findViewById(R.id.note_title)).setText(note.getTitle());
         ((TextInputEditText) view.findViewById(R.id.note_description)).setText(note.getDescription());
-        ((DatePicker) view.findViewById(R.id.note_creation_date)).updateDate(
-                note.getCreationDateTime().getYear(),
-                note.getCreationDateTime().getMonthValue() - 1,
-                note.getCreationDateTime().getDayOfMonth()
-        );
 
         return view;
     }

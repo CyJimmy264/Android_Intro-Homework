@@ -1,6 +1,5 @@
-package ru.cj264.geekbrains.android_intro.homework.ui.notes_list;
+package ru.cj264.geekbrains.android_intro.homework.ui.notes_list.adapter;
 
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,31 +25,26 @@ import ru.cj264.geekbrains.android_intro.homework.domain.Note;
 
 public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.NoteViewHolder> {
 
-    private final List<Note> items = new ArrayList<>();
+    private final List<AdapterItem> items = new ArrayList<>();
 
     private OnNoteClicked onNoteClicked;
-
     private OnNoteLongClicked onNoteLongClicked;
 
     private final Fragment fragment;
+
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy HH:mm");
 
     public NotesListAdapter(Fragment fragment) {
         this.fragment = fragment;
     }
 
-    public void setItems(List<Note> items) {
+    public void setItems(List<AdapterItem> items) {
+        DiffUtil.Callback callback = new DiffUtilCallback(this.items, items);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(callback);
+        diffResult.dispatchUpdatesTo(this);
         this.items.clear();
         this.items.addAll(items);
     }
-
-    public void addItem(Note note) {
-        items.add(note);
-    }
-
-    public void deleteItem(int position) {
-        items.remove(position);
-    }
-
 
     @NonNull
     @Override
@@ -62,19 +57,18 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
 
     @Override
     public void onBindViewHolder(@NonNull NotesListAdapter.NoteViewHolder holder, int position) {
-        Note item = items.get(position);
+        Note note = ((NoteAdapterItem ) items.get(position)).getNote();
 
-        holder.getNoteTitle().setText(item.getTitle());
+        holder.getNoteTitle().setText(note.getTitle());
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy HH:mm");
         ZonedDateTime dateTime = ZonedDateTime.of(
-                item.getCreationDateTime(),
+                note.getCreationDateTime(),
                 ZoneId.of(TimeZone.getDefault().getID())
         );
         holder.getNoteCreationDate().setText(dateTime.format(dateTimeFormatter));
 
         Glide.with(holder.getNoteImage())
-                .load(item.getImageUrl())
+                .load(note.getImageUrl())
                 .into(holder.getNoteImage());
     }
 
@@ -100,11 +94,11 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
     }
 
 
-    interface OnNoteClicked {
+    public interface OnNoteClicked {
         void onNoteClicked(Note note);
     }
 
-    interface OnNoteLongClicked {
+    public interface OnNoteLongClicked {
         void onNoteLongClicked(View itemView, int position, Note note);
     }
 
@@ -123,15 +117,17 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesListAdapter.Note
             noteImage = itemView.findViewById(R.id.note_image);
 
             itemView.setOnClickListener(v -> {
+                Note adapterPositionNote = ((NoteAdapterItem) items.get(getAdapterPosition())).getNote();
                 if (getOnNoteClicked() != null) {
-                    getOnNoteClicked().onNoteClicked(items.get(getAdapterPosition()));
+                    getOnNoteClicked().onNoteClicked(adapterPositionNote);
                 }
             });
 
             itemView.setOnLongClickListener(v -> {
-                if (onNoteLongClicked != null) {
-                    onNoteLongClicked.onNoteLongClicked(itemView, getAdapterPosition(),
-                            items.get(getAdapterPosition()));
+                Note adapterPositionNote = ((NoteAdapterItem) items.get(getAdapterPosition())).getNote();
+                if (getOnNoteLongClicked() != null) {
+                    getOnNoteLongClicked().onNoteLongClicked(itemView, getAdapterPosition(),
+                            adapterPositionNote);
                 }
 
                 return true;

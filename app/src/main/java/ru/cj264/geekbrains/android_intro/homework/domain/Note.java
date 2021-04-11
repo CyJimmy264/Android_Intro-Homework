@@ -2,13 +2,14 @@ package ru.cj264.geekbrains.android_intro.homework.domain;
 
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Note {
     private final String id;
     private final LocalDateTime creationDateTime;
-    private final String title;
-    private final String description;
-    private String imageUrl = "https://img3.akspic.ru/originals/2/8/8/7/4/147882-poni-rozovyj-liniya-kartinka-televideniye-750x1334.jpg";
+    private String title;
+    private String description;
+    private String imageUrl;
 
     public Note(String id, String title, String description, LocalDateTime creationDateTime) {
         this.id = id;
@@ -25,11 +26,28 @@ public class Note {
 
     public LocalDateTime getCreationDateTime() { return creationDateTime; }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageUrl() { return imageUrl; }
+
+    public void setTitle(String title) { this.title = title; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Note note = (Note) o;
+        return getId().equals(note.getId()) &&
+                getCreationDateTime().equals(note.getCreationDateTime()) &&
+                Objects.equals(getTitle(), note.getTitle()) &&
+                Objects.equals(getDescription(), note.getDescription()) &&
+                Objects.equals(getImageUrl(), note.getImageUrl());
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCreationDateTime(), getTitle(), getDescription(), getImageUrl());
     }
 }

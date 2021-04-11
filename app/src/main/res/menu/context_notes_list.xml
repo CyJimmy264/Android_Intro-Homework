@@ -6,4 +6,9 @@
         android:title="@string/delete"
         android:orderInCategory="40"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_date_picker"
+        android:title="@string/edit_date"
+        android:orderInCategory="80"
+        app:showAsAction="never" />
 </menu>
