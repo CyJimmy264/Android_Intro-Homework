@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
-import ru.cj264.geekbrains.android_intro.homework.ui.NoteFragment;
+import ru.cj264.geekbrains.android_intro.homework.ui.note.NoteFragment;
 import ru.cj264.geekbrains.android_intro.homework.ui.notes_list.adapter.NotesListAdapter;
 
 public class NotesListFragment extends Fragment {
@@ -45,7 +45,9 @@ public class NotesListFragment extends Fragment {
 
         notesListViewModel = ViewModelProviders.of(this, new NotesListViewModelFactory())
                 .get(NotesListViewModel.class);
-        notesListViewModel.fetchNotes();
+        if (savedInstanceState == null) {
+            notesListViewModel.fetchNotes();
+        }
 
         notesListAdapter = new NotesListAdapter(this);
         notesListAdapter.setOnNoteClicked(note -> {

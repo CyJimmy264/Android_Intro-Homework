@@ -1,4 +1,4 @@
-package ru.cj264.geekbrains.android_intro.homework.ui;
+package ru.cj264.geekbrains.android_intro.homework.ui.note;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 
 import androidx.fragment.app.Fragment;
 
@@ -62,11 +61,6 @@ public class NoteFragment extends Fragment {
 
         ((TextInputEditText) view.findViewById(R.id.note_title)).setText(note.getTitle());
         ((TextInputEditText) view.findViewById(R.id.note_description)).setText(note.getDescription());
-        ((DatePicker) view.findViewById(R.id.note_creation_date)).updateDate(
-                note.getCreationDateTime().getYear(),
-                note.getCreationDateTime().getMonthValue() - 1,
-                note.getCreationDateTime().getDayOfMonth()
-        );
 
         return view;
     }
