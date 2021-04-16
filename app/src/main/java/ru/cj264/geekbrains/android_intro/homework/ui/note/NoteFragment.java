@@ -7,20 +7,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.LocalDateTime;
 
 import ru.cj264.geekbrains.android_intro.homework.R;
+import ru.cj264.geekbrains.android_intro.homework.databinding.FragmentNoteBinding;
 import ru.cj264.geekbrains.android_intro.homework.domain.Note;
 
 public class NoteFragment extends Fragment {
 
     public static final String TAG = "NoteFragment";
     public static final String ARG_NOTE_ID = "noteId";
-    private Note note;
+
+    private FragmentNoteBinding binding;
 
     public static NoteFragment newInstance(String noteId) {
         NoteFragment fragment = new NoteFragment();
@@ -41,27 +47,34 @@ public class NoteFragment extends Fragment {
                 requireActivity().getSupportFragmentManager().popBackStack();
             }
         }
-
-        if (getArguments() != null) {
-//            String noteId = getArguments().getString(ARG_NOTE_ID);
-
-//            note = null;
-//            repository.getNotes().stream()
-//                    .filter(note -> note.getId().equals(noteId)).findFirst()
-//                    .ifPresent(value -> note = value);
-
-            note = new Note("1", "First",  "First note content",  LocalDateTime.of(2021, 3, 22, 13, 49));
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_note, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_note, container, false);
 
-        ((TextInputEditText) view.findViewById(R.id.note_title)).setText(note.getTitle());
-        ((TextInputEditText) view.findViewById(R.id.note_description)).setText(note.getDescription());
+        return binding.getRoot();
+    }
 
-        return view;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        NoteViewModel.Factory factory = new NoteViewModel.Factory(
+                requireArguments().getString(ARG_NOTE_ID)
+        );
+
+        final NoteViewModel model = new ViewModelProvider(this, factory)
+                .get(NoteViewModel.class);
+
+        binding.setLifecycleOwner(getViewLifecycleOwner());
+        binding.setNoteViewModel(model);
+    }
+
+    @Override
+    public void onDestroyView() {
+        binding = null;
+        super.onDestroyView();
     }
 }

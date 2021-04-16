@@ -98,7 +98,7 @@ public class NotesListFragment extends Fragment {
             return true;
         });
 
-        notesListViewModel.getNotesLiveData()
+        notesListViewModel.getNotesListLiveData()
                 .observe(getViewLifecycleOwner(), notes -> notesListAdapter.setItems(notes));
 
         notesListViewModel.getProgressLiveData()

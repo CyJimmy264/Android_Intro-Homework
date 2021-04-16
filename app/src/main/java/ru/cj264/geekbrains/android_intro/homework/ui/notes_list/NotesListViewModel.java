@@ -17,7 +17,7 @@ import ru.cj264.geekbrains.android_intro.homework.ui.notes_list.adapter.NoteAdap
 public class NotesListViewModel extends ViewModel {
     private final NotesRepository repository;
 
-    private final MutableLiveData<List<Note>> notesLiveData = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<Note>> notesListLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
 
     public NotesListViewModel(NotesRepository notesRepository) {
@@ -27,13 +27,13 @@ public class NotesListViewModel extends ViewModel {
     public void fetchNotes() {
         progressLiveData.setValue(true);
         repository.getNotes(value -> {
-            notesLiveData.setValue(value);
+            notesListLiveData.setValue(value);
             progressLiveData.setValue(false);
         });
     }
 
-    public LiveData<List<AdapterItem>> getNotesLiveData() {
-        return Transformations.map(notesLiveData, input -> {
+    public LiveData<List<AdapterItem>> getNotesListLiveData() {
+        return Transformations.map(notesListLiveData, input -> {
             ArrayList<AdapterItem> output = new ArrayList<>();
 
             Collections.sort(input, (o1, o2)
@@ -54,9 +54,9 @@ public class NotesListViewModel extends ViewModel {
     public void addNewNote() {
         progressLiveData.setValue(true);
         repository.addNewNote(value -> {
-            List<Note> currentNotes = notesLiveData.getValue();
+            ArrayList<Note> currentNotes = notesListLiveData.getValue();
             currentNotes.add(value);
-            notesLiveData.postValue(currentNotes);
+            notesListLiveData.postValue(currentNotes);
             progressLiveData.setValue(false);
         });
     }
@@ -65,7 +65,7 @@ public class NotesListViewModel extends ViewModel {
         progressLiveData.setValue(true);
         repository.clearNotes(voidValue -> {
             // TODO: clear repository? Danger!
-            notesLiveData.postValue(new ArrayList<>());
+            notesListLiveData.postValue(new ArrayList<>());
             progressLiveData.setValue(false);
         });
     }
@@ -74,9 +74,9 @@ public class NotesListViewModel extends ViewModel {
         progressLiveData.setValue(true);
         // TODO: repository delete
         repository.addNewNote(value -> {
-            ArrayList<Note> currentNotes = new ArrayList<>(notesLiveData.getValue());
+            ArrayList<Note> currentNotes = new ArrayList<>(notesListLiveData.getValue());
             currentNotes.remove(contextMenuItemPosition);
-            notesLiveData.postValue(currentNotes);
+            notesListLiveData.postValue(currentNotes);
             progressLiveData.setValue(false);
         });
     }
