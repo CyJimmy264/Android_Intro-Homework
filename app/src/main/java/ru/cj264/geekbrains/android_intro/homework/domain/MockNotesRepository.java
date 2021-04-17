@@ -18,7 +18,7 @@ public class MockNotesRepository implements NotesRepository {
     private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
 
     @Override
-    public void getNotes(Callback<List<Note>> callback) {
+    public void getNotes(Callback<ArrayList<Note>> callback) {
 
         executor.execute(() -> {
             // network request simulation
@@ -28,7 +28,7 @@ public class MockNotesRepository implements NotesRepository {
                 e.printStackTrace();
             }
 
-            List<Note> data = new ArrayList<>();
+            ArrayList<Note> data = new ArrayList<>();
 
             data.add(new Note("1", "First",  "First note content",  LocalDateTime.of(2021, 3, 22, 13, 49)));
             data.add(new Note("2", "Second", "Second note content", LocalDateTime.of(2021, 3, 23, 23, 50)));
@@ -52,6 +52,27 @@ public class MockNotesRepository implements NotesRepository {
             data.add(new Note("20", "Fifth",  "Fifth note content",  LocalDateTime.of(2021, 3, 26, 3, 53)));
 
             mainThreadHandler.post(() -> callback.onResult(data));
+        });
+    }
+
+
+    @Override
+    public void getNote(String noteId, Callback<Note> callback) {
+        executor.execute(() -> {
+            // network request simulation
+            try {
+                Thread.sleep(800L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            mainThreadHandler.post(() -> callback.onResult(
+                    new Note(noteId,
+                            "First",
+                            "First note content",
+                            LocalDateTime.of(2021, 3, 22, 13, 49)
+                    )
+            ));
         });
     }
 

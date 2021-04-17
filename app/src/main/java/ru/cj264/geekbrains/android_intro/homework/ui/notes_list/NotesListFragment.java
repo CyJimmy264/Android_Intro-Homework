@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +28,7 @@ import ru.cj264.geekbrains.android_intro.homework.R;
 import ru.cj264.geekbrains.android_intro.homework.ui.note.NoteFragment;
 import ru.cj264.geekbrains.android_intro.homework.ui.notes_list.adapter.NotesListAdapter;
 
-public class NotesListFragment extends Fragment {
+public class NotesListFragment extends Fragment implements DeleteDialogFragment.OnClicked {
 
     public static final String TAG = "NotesListFragment";
     public static final String STATE_CURRENT_NOTE = "CurrentNote";
@@ -98,7 +99,7 @@ public class NotesListFragment extends Fragment {
             return true;
         });
 
-        notesListViewModel.getNotesLiveData()
+        notesListViewModel.getNotesListLiveData()
                 .observe(getViewLifecycleOwner(), notes -> notesListAdapter.setItems(notes));
 
         notesListViewModel.getProgressLiveData()
@@ -169,7 +170,7 @@ public class NotesListFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_delete) {
-            notesListViewModel.deleteAtPosition(contextMenuItemPosition);
+            new DeleteDialogFragment().show(getChildFragmentManager(), DeleteDialogFragment.TAG);
             return true;
         }
         if (item.getItemId() == R.id.action_date_picker) {
@@ -179,5 +180,15 @@ public class NotesListFragment extends Fragment {
             return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onDeleteClickedYes() {
+        notesListViewModel.deleteAtPosition(contextMenuItemPosition);
+    }
+
+    @Override
+    public void onDeleteClickedNo() {
+        Toast.makeText(requireContext(), R.string.no, Toast.LENGTH_LONG).show();
     }
 }
