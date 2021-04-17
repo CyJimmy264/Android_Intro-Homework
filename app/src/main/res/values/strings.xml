@@ -10,4 +10,8 @@
     <string name="clear">Clear</string>
     <string name="delete">Delete</string>
     <string name="edit_date">Edit date</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
